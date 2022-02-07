@@ -228,6 +228,7 @@ const run = async (file) => {
   reader.readAsDataURL(file);
   await loadWorker()
   const { data } = await worker.recognize(file);
+  copyToClipboard(data.text)
   result(data);
 }
 
@@ -256,3 +257,8 @@ document.onpaste = (e) => {
   }
 }
 
+const copyToClipboard = (text) => {
+  const button = document.createElement('button')
+  new ClipboardJS(button, { text: () => text });
+  button.click()
+}
